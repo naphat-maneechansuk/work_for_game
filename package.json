@@ -1,0 +1,16 @@
+{
+  "name": "nodelearningbygame",
+  "version": "1.0.0",
+  "main": "nodejs_1.js",
+  "scripts": {
+    "start": "node nodejs_1.js",
+    "cowsay": "node nodejs_2.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Naphat",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cowsay": "^1.6.0"
+  }
+}

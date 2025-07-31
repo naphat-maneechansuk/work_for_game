@@ -21,7 +21,17 @@ const server = http.createServer((req, res) => {
     req.on("end", () => {
       console.log("Received POST DATA:", body);
       res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end("Hello World\n");
+
+      const data = parse(body);
+      const input = data.value || "";
+      let sum = 0;
+      for (let i = 0; i < input.length; i++) {
+        const digit = parseInt(input[i]);
+        if (!isNaN(digit)) {
+          sum += digit;
+        }
+      }
+      res.end(`Output: ${sum}\n`);
     });
   } else {
     res.writeHead(200, { "Content-Type": "text/html" });

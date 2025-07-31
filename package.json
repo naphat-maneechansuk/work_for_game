@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "nodelearningbygame",
   "version": "1.0.0",
   "main": "nodejs_1.js",

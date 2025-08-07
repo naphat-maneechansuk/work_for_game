@@ -12,6 +12,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "cowsay": "^1.6.0"
+    "cowsay": "^1.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }

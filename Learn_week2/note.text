@@ -1,0 +1,18 @@
+1.npm init                          : สร้าง packege.json
+2.npm install typescript            : คำสั่งติดตั้ง TypeScript ลงในโปรเจค
+3.npx tsc                           : การรัน Compiler เพื่อแปลงไฟล์ .ts เป็นไฟล์ .js ตามการตั้งค่าใน tsconfig.json
+4.npm install --save-dev ts-node    : ติดตั้ง ts-node แบบ devDependencies เอาไว้รันไฟล์ .ts โดยตรงใน Node.js โดยไม่ต้องคอมไพล์เป็น .js ก่อน
+5.npx tsc --init                    : สร้างไฟล์ tsconfig.json
+6.npm install -D @types/node        : ติดตั้ง type definitions ของ Node.js
+7.npm run build                     : รันสคริปต์ build ใน package.json ที่พึ่งสร้างตามจารย์
+8.npm install -D ts-node-dev        : ติดตั้ง ts-node-dev เอาไว้รันไฟล์ .ts โดยตรงใน Node.js โดยไม่ต้องคอมไพล์เป็น .js ก่อน
+------------------ ช่วง 2 ----------------
+9.npm install readline              : เพื่อให้โปรเเกรมสามารถอ่านไฟล์เเล้วบอกว่าควรใช้ type ชนิดอะไรได้
+10.npm install @types/node          : ตัวนี้ไม่รู้เหมือนกนว่าลงทำไม เเต่จารย์พาลงเเล้ว ตับอกชนิด tpe ทำงาน
+11.npm remove readline              : เหมือนอาจารย์มีปัญหากับตัว readline เลยลบออก
+
+
+/*
+#เสริม
+#npm install คือคำสั่งที่ใช้ติดตั้ง dependencies ทั้งหมดที่ระบุไว้ในไฟล์ package.json ลงในโฟลเดอร์ node_modules ของโปรเจค
+*/

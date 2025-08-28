@@ -1,0 +1,8 @@
+npm install
+npm npm install mysql2
+npm install multer
+npm install -D @types/multer
+
+เเต่เอาตรง ๆ โหลด nodejs-express.zip มาเเตกไฟล์เเล้วเปิดเอง ง่ายกว่า
+รันเเค่ npm install จบ เริ่ม code เองได้เลย
+ีที่เหลือเวลาทดสอบก็ npm run dev 

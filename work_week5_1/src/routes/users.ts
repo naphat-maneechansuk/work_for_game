@@ -9,6 +9,22 @@ const router = Router();
 import { verifyToken } from "../middlewares/auth";
 
 /**
+ * GET /user/name
+ * ดึง fname และ lname ของผู้ใช้ทั้งหมด
+ */
+router.get("/user/name/:id", async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json({ status: "error", message: "Invalid ID" });
+  }
+  const user = await userModel.getUserById(id);
+  if (!user) {
+    return res.status(404).json({ status: "error", message: "User not found" });
+  }
+  res.status(200).json({ status: "ok", data: { fname: user.us_fname, lname: user.us_lname } });
+});
+
+/**
  * GET /users2
  * ดึงข้อมูลผู้ใช้ทั้งหมด พร้อม URL รูปภาพ
  */
@@ -21,7 +37,6 @@ router.get("/users2", async (req: Request, res: Response) => {
   }));
   res.status(200).json({ status: "ok", data: usersWithAvatar });
 });
-
 
 /**
  * POST /users

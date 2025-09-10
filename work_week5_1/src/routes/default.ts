@@ -58,7 +58,7 @@ router.post("/login", (req: Request, res: Response) => {
     (async () => {
         const user = await getUserlogin(username, password);
         if (user) {
-            const token = generateToken(username);
+            const token = generateToken({ username });
             res.json({ status: 'ok', username, token });
         } else {
             res.status(401).json({ status: 'error', message: 'Invalid username or password' });
@@ -72,10 +72,12 @@ router.get('/test-token', verifyToken, (req: Request, res: Response) => {
     if (!authHeader) return res.status(401).json({ message: "No token provided" });
 
     let token = authHeader.split(" ")[1] || ""; // Expect: "Bearer <token>"
-
-    if (checkToken(token)) {
+    const result = checkToken(token);
+    if (result.valid) {
         res.json({ status: 'ok', message: "Token is valid" });
-    }else{
+    } else if (result.expired) {
+        res.json({ status: 'error', message: "Token expired" });
+    } else {
         res.json({ status: 'error', message: "Token is invalid" });
     }
 });

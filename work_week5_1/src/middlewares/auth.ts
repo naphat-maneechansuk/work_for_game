@@ -1,14 +1,19 @@
-import { checkToken } from "../utils/token.js";
+import { checkToken } from "../utils/token";
 
 export const verifyToken = (req:any, res:any, next:any) => {
     const authHeader = req.headers["authorization"];
     if (!authHeader) return res.status(401).json({ message: "No token provided" });
 
     const token = authHeader.split(" ")[1]; // Expect: "Bearer <token>"
+    console.log("Token received:", token);
 
-    if (checkToken(token)) {
-        next()
+    const result = checkToken(token);
+    console.log("CheckToken result:", result);
+    if (result.valid) {
+        next();
+    } else if (result.expired) {
+        res.status(403).json({ message: "Token expired" });
     } else {
-        res.status(403).json({ message: "Invalid or expired token" });
+        res.status(403).json({ message: "Invalid token" });
     }
 };

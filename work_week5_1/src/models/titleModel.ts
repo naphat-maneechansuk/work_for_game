@@ -1,4 +1,5 @@
 import db from './conection'
+import { RowDataPacket } from "mysql2";
 
 //เช็คว่าใน databas
 async function seedTitles() {
@@ -25,9 +26,9 @@ function insertTitle( id:number, name:string){
     return results;
 }
 
-function getTitleById(id: number) {
-    let results = db.query("select * from titles where tit_id = ?", [id]);
-    return results;
+async function getTitleById(id: number) {
+    const [rows] = await db.query("select * from titles where tit_id = ?", [id]) as [RowDataPacket[], any];
+    return rows;
 }
 
 function postTitle(id: number, name: string) {

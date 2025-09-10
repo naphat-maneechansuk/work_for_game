@@ -87,6 +87,10 @@ router.put("/users/:id", async (req: Request, res: Response) => {
   if (isNaN(id)) {
     return res.status(400).json({ status: "error", message: "Invalid ID" });
   }
+  const user = await userModel.getUserById(id);
+  if (!user) {
+    return res.status(404).json({ status: "error", message: "User not found" });
+  }
   const result = await userModel.updateUser(id, req.body);
   res.json({ status: "ok", affectedRows: result.affectedRows });
 });
@@ -99,6 +103,10 @@ router.delete("/users/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   if (isNaN(id)) {
     return res.status(400).json({ status: "error", message: "Invalid ID" });
+  }
+  const user = await userModel.getUserById(id);
+  if (!user) {
+    return res.status(404).json({ status: "error", message: "User not found" });
   }
   const result = await userModel.deleteUser(id);
   res.json({ status: "ok", affectedRows: result.affectedRows });

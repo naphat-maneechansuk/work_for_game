@@ -32,6 +32,17 @@ export async function getUserById(id: number) {
   return (rows as RowDataPacket[])[0];
 }
 
+/**
+ * ดึงข้อมูลผู้ใช้ตาม username และ password
+ * คืนค่า object ของผู้ใช้ (หรือ undefined ถ้าไม่พบ)
+ */
+export async function getUserlogin(username: string, password: string) {
+  const [rows] = await db.query(
+    `SELECT * FROM users WHERE us_username = ? AND us_password = ? LIMIT 1`,
+    [username, password]
+  );
+  return (rows as RowDataPacket[])[0];
+}
 
 /**
  * สร้างผู้ใช้ใหม่
@@ -109,4 +120,4 @@ export async function isUsernameExists(us_username: string): Promise<boolean> {
 }
 
 // ส่งออกฟังก์ชันทั้งหมดสำหรับใช้งานกับข้อมูลผู้ใช้
-export default { getUserAll, getUserById, createUser, updateUser, deleteUser, isUsernameExists };
+export default { getUserAll, getUserById, createUser, updateUser, deleteUser, isUsernameExists, getUserlogin };

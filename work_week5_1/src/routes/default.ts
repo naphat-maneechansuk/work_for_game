@@ -5,7 +5,7 @@ import { upload } from "../utils/uploads"; // นำเข้า middleware ส�
 
 import { generateToken, checkToken } from "../utils/token"; // ฟังก์ชันเกี่ยวกับ token
 import { verifyToken } from "../middlewares/auth"; // middleware ตรวจสอบ token
-
+import { getUserlogin } from "../models/userModel";
 // const router = express.Router(); // ตัวอย่างการสร้าง router แบบ express
 const router = Router(); // สร้าง router แบบ express
 
@@ -54,9 +54,16 @@ router.get("/file/:filename", (req: Request, res: Response) => {
 
 // route สำหรับ login และส่ง token กลับไปให้ผู้ใช้
 router.post("/login", (req: Request, res: Response) => {
-    let { username, password } = req.body;
-    let token = generateToken(username);
-    res.json({ status: 'ok', username, password, token });
+    const { username, password } = req.body;
+    (async () => {
+        const user = await getUserlogin(username, password);
+        if (user) {
+            const token = generateToken(username);
+            res.json({ status: 'ok', username, token });
+        } else {
+            res.status(401).json({ status: 'error', message: 'Invalid username or password' });
+        }
+    })();
 });
 
 // route สำหรับทดสอบ token ว่าใช้งานได้หรือไม่

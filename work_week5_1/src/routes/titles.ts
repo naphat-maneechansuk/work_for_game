@@ -4,8 +4,6 @@ import titleModel from "../models/titleModel";
 
 const router = Router();
 
-
-
 /**
  * Login ก่อน
 ส่ง POST ไปที่ /login พร้อมข้อมูล username และ password
@@ -24,11 +22,10 @@ Value: Bearer <token> (แทนที่ <token> ด้วย token ที่�
 router.get("/titles", async (req: Request, res: Response) => {
     let result = await titleModel.getTitleAll();
     if (result.length > 0) {
-        res.json({ status: 'ok', data: result[0] });
+        res.status(200).json({ status: 'ok', data: result[0] });
     } else {
-        res.json({ status: 'error', data: [] });
+        res.status(404).json({ status: 'error', data: [] });
     }
-
 });
 
 router.get("/title/:id", async (req: Request, res: Response) => {
@@ -59,9 +56,11 @@ router.post("/title", async (req: Request, res: Response) => {
         res.status(409).json({ status: 'error', message: 'ID already exists' });
         return;
     }
+
     await titleModel.postTitle(id, name);
     res.json({ status: 'ok', message: 'Title added successfully' });
 });
+
 
 router.put("/title/:id", async (req: Request, res: Response) => {
     const id = Number(req.params.id);

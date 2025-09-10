@@ -21,7 +21,7 @@ function getTitleAll(){
     return results;
 }
 
-function insertTitle( id:number, name:string){
+function insertTitle(id:number, name:string){
     let results = db.query("insert into titles (tit_id, tit_name) values (?, ?)", [id, name])
     return results;
 }

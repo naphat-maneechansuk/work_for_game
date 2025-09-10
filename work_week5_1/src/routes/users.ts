@@ -8,6 +8,19 @@ import userModel from "../models/userModel";
 const router = Router();
 import { verifyToken } from "../middlewares/auth";
 
+/**
+ * GET /users2
+ * ดึงข้อมูลผู้ใช้ทั้งหมด พร้อม URL รูปภาพ
+ */
+router.get("/users2", async (req: Request, res: Response) => {
+  const users = await userModel.getUserAll();
+  // เพิ่ม url รูปภาพให้แต่ละ user
+  const usersWithAvatar = users.map((user: any) => ({
+    ...user,
+    avatar_url: user.us_avatar ? `${req.protocol}://${req.get('host')}/file/${user.us_avatar}` : null
+  }));
+  res.status(200).json({ status: "ok", data: usersWithAvatar });
+});
 
 
 /**
@@ -58,7 +71,7 @@ Value: Bearer <token> (แทนที่ <token> ด้วย token ที่�
 */
 router.get("/users", async (req: Request, res: Response) => {
   const users = await userModel.getUserAll();
-  res.json({ status: "ok", data: users });
+  res.status(200).json({ status: "ok", data: users });
 });
 
 /**

@@ -4,7 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "this_is_a_secret_key" as string;
 const expiresIn = process.env.JWT_EXPIRES_IN || "1h";
 
 export const generateToken = (payload: any) => {
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: 60 * 60 });   
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: 60 * 60 }); 
 };
 //คือค่า โดนหมดอายุ 1 ชั่วโมง
 //60*60 = 1 hour
@@ -22,6 +22,7 @@ export const checkToken = (token: string) => {
         return { error: 'UnknownError', message: err.message };
     }
 };
+
 
 // ทดสอบการสร้างและตรวจสอบ token
 /*

@@ -110,7 +110,7 @@ router.get("/users/:id", async (req: Request, res: Response) => {
  * PUT /users/:id
  * อัปเดตข้อมูลผู้ใช้ตาม id
  */
-router.put("/users/:id", async (req: Request, res: Response) => {
+router.put("/users/:id", upload.single("us_avatar"), async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   if (isNaN(id)) {
     return res.status(400).json({ status: "error", message: "Invalid ID" });
@@ -119,7 +119,21 @@ router.put("/users/:id", async (req: Request, res: Response) => {
   if (!user) {
     return res.status(404).json({ status: "error", message: "User not found" });
   }
-  const result = await userModel.updateUser(id, req.body);
+  // กรองเฉพาะ field ที่อนุญาตให้แก้ไข
+  const allowedFields = ["us_tit_id", "us_fname", "us_lname", "us_avatar", "us_username", "us_password"];
+  const updateData: any = {};
+  for (const key of allowedFields) {
+    if (req.body[key] !== undefined) {
+      updateData[key] = req.body[key];
+    }
+  }
+  if (req.file) {
+    updateData.us_avatar = req.file.filename;
+  }
+  if (Object.keys(updateData).length === 0) {
+    return res.status(400).json({ status: "error", message: "No fields to update" });
+  }
+  const result = await userModel.updateUser(id, updateData);
   res.json({ status: "ok", affectedRows: result.affectedRows });
 });
 

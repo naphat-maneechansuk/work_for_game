@@ -133,6 +133,14 @@ router.put("/users/:id", upload.single("us_avatar"), async (req: Request, res: R
   if (Object.keys(updateData).length === 0) {
     return res.status(400).json({ status: "error", message: "No fields to update" });
   }
+    // ถ้ามีการแก้ไข us_username ต้องเช็คซ้ำ
+    if (updateData.us_username && updateData.us_username !== user.us_username) {
+      const isExists = await userModel.isUsernameExists(updateData.us_username);
+      if (isExists) {
+        return res.status(409).json({ status: "error", message: "Username already exists" });
+      }
+    }
+    
   const result = await userModel.updateUser(id, updateData);
   res.json({ status: "ok", affectedRows: result.affectedRows });
 });

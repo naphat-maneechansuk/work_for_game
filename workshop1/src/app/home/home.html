@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>home Work!</h1>
+
+  <div>
+    <label>ป้อนแม่สูตรคูณ: </label>
+    <input type="number" [formControl]="name" min="1" max="12">
+    <button (click)="createTable()">click me</button>
+  </div>
+
+  <div *ngIf="showTable">
+    <h2>ตารางสูตรคูณแม่ {{ multiplier }}</h2>
+    <div *ngFor="let i of numbers">
+      <p>{{ multiplier }} × {{ i }} = {{ multiplier * i }}</p>
+    </div>
+  </div>
+</div>
